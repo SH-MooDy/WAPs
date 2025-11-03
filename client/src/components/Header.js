@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import wapLogo from "../assets/img/WAP_white_NoBG.png";
 import Menu from "./Menu";
 
 const Header = () => {
-  const [userName, setUserName] = useState(Cookies.get("userName") || null); // 쿠키에서 초기값 가져오기
+  const [userName, setUserName] = useState(Cookies.get("userName") || null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen((p) => !p);
 
   useEffect(() => {
     const token = Cookies.get("authToken");
     const savedUserName = Cookies.get("userName");
-    if (token && savedUserName) {
-      setUserName(savedUserName); // 쿠키에 저장된 사용자 이름 설정
-    }
+    if (token && savedUserName) setUserName(savedUserName);
   }, []);
 
   const handleLogout = () => {
@@ -32,21 +27,27 @@ const Header = () => {
     navigate("/login", { state: { from: window.location.pathname } });
   };
 
+
   return (
     <>
       <header className="App-header">
-        <div className="logo">
-          <img
-            className="waplogo"
-            alt="wap"
-            src={wapLogo}
-            onClick={() => navigate("/HomePage")}
-            style={{ cursor: "pointer" }}
-          />
-        </div>
+        <div className="header-inner">
+          <div>
 
-        <div className="menu-icon" onClick={toggleMenu}>
-          {menuOpen ? "✕" : "☰"}
+            <p
+              className="waplogo"
+              alt="wap"
+              onClick={() => navigate("/HomePage")}
+              style={{ cursor: "pointer" }}
+            >
+              WAPs
+            </p>
+          </div>
+
+          {/* 아이콘은 CSS에서 absolute로 오른쪽 고정 */}
+          <div className="menu-icon" onClick={toggleMenu}>
+            {menuOpen ? <p>✕</p> : <p className="menu-bar">☰</p>}
+          </div>
         </div>
       </header>
 

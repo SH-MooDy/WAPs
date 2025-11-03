@@ -1,0 +1,377 @@
+/* --- 폰트 임포트 --- */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+/* --- 전역 폰트 지정 --- */
+html,
+body {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --- 기본 스타일 및 변수 --- */
+:root {
+  --bg: rgba(255, 255, 255, 0.2);
+  --text: #fff;
+  --muted: #6b7280;
+  --accent: #abd4fd;
+  --border: #34486f;
+  --black: #000000;
+  --badge: #cacaca;
+  --mute: rgba(255, 255, 255, 0.5);
+}
+
+.container {
+  max-width: 1321px;
+  padding: 0 0 40px;
+}
+
+.contentBox {
+  margin-top: -65px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loadingImage {
+  width: 150px;
+  opacity: 0.8;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(0.95);
+  }
+}
+
+/* --- 헤더 --- */
+
+/* 아래→위 명암 오버레이 */
+.header {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  display: flex;
+  padding: 32px 20px 28px;
+  box-sizing: border-box;
+  isolation: isolate;
+  background: linear-gradient(90deg, #a0afff 0%, #b4edfe 100%);
+  overflow: visible;
+}
+
+.headerInner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(30, 30, 30, 0.6) 40%,
+    rgba(102, 102, 102, 0) 100%
+  );
+  z-index: -1;
+}
+
+.pageTitle {
+  padding: 0 20px;
+  color: fff;
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.titleSub {
+  font-size: 10px;
+  text-align: center;
+  font-weight: 100;
+  color: ffffff;
+  opacity: 50%;
+  margin-top: 7px;
+}
+.sub {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.backBtn {
+  padding: 10px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.backBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #fafafa;
+}
+
+.backBtn:active {
+  transform: translateY(1px);
+}
+
+/* --- 툴바 (검색, 정렬) --- */
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.search {
+  height: 48px;
+  display: flex;
+  gap: 8px;
+}
+
+.search input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px;
+  border-radius: 15px;
+  font-size: 14px;
+  min-width: 100px;
+  background: var(--bg);
+  caret-color: white;
+  color: var(--text);
+}
+
+.search input::placeholder {
+  color: var(--text);
+  opacity: 0.7;
+  font-weight: 100;
+}
+
+.search input:focus {
+  outline: none;
+}
+.sorts {
+  display: flex;
+  gap: 7px;
+}
+
+.btn {
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  background-color: transparent;
+  border-radius: 50px;
+  font-size: 12px;
+  border-color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.activeSort {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--black);
+  font-weight: 500;
+}
+
+.activeSort:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--black);
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.activeSort {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--black);
+  font-weight: 500;
+}
+
+.activeSort:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--black);
+}
+
+/*카드 그리드*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 30px 0 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionSub {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 100;
+  margin-bottom: 10px;
+}
+
+/*카드 스타일*/
+.card {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.nameSpace {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+
+.teamName {
+  max-width: 200px;
+  font-size: 22px;
+  font-weight: 600;
+
+  /* 제목이 한줄이상이면 ...으로 생략 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  background: var(--bg);
+  color: var(--badge);
+  padding: 3px 5.5px;
+  font-size: 7px;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+.muted {
+  color: var(--mute);
+  font-size: 12px;
+}
+
+.label {
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.roll {
+  color: var(--mute);
+  font-size: 10px;
+  padding: 0px 5px 0px 2px;
+}
+
+.members {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+}
+
+.footer {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.summary {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  /* 설명 오버플로우 시 공백 단위로 줄넘김 */
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.copy {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background-color: transparent;
+  border-radius: 50px;
+  font-size: 11px;
+  text-align: center;
+  cursor: pointer;
+  border-color: #7f7f7f;
+  color: #7f7f7f;
+  font-weight: 600;
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  background: var(--card);
+}
+
+.notMatched {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  gap: 10px;
+}
