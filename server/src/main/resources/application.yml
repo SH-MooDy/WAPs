@@ -54,7 +54,7 @@ app:
   #      - http://localhost:8080
   oauth2:
     authorizedRedirectUris:
-      - https://wap-projects.netlify.app/oauth2/redirect
+      - https://waps.im/oauth2/redirect
       - https://wapst.netlify.app/oauth2/redirect
       - https://waps-deploy.netlify.app/oauth2/redirect
       - http://localhost:3000/oauth2/redirect
@@ -73,6 +73,22 @@ swagger:
 project:
   password: 1248
 
-logging:
-  level:
-    org.springframework.security: DEBUG
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
+## monitoring
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include: info, health
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true

@@ -1,0 +1,314 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --primary: #abd4fd;
+  --active: #d9d9d9;
+  --disable: #616161;
+  --tableLine: rgba(255, 255, 255, 0.5);
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 투표 관리 페이지 고정 상단 */
+.upperBox {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.upperLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 29px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.upperRight {
+  white-space: nowrap;
+  align-self: flex-end;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.voteSemester {
+  width: 212px;
+  font-size: 50px;
+  font-weight: 700;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.openBtn,
+.closeBtn {
+  padding: 5px 39px;
+  font-size: 40px;
+  font-weight: 700;
+  border: none;
+  border-radius: 23px;
+  color: black;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.openBtn {
+  background: var(--primary);
+}
+
+.openBtn:hover,
+.openBtn:active {
+  background: #8db7e0;
+}
+
+.closeBtn {
+  background: var(--active);
+}
+
+.closeBtn:hover,
+.closeBtn:active {
+  background: #c4c4c4;
+}
+.closeBtn:disabled {
+  cursor: not-allowed;
+}
+
+.bar {
+  width: 100%;
+  height: 3px;
+  background-color: #606060;
+  margin-top: 40px;
+  margin-bottom: 45px;
+}
+
+/* 투표 전 (NOT_CREATED) */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(303px, 1fr));
+  gap: 18px;
+  height: calc(100vh - 360px);
+  overflow-y: auto;
+  padding-right: 10px;
+  justify-items: center;
+}
+
+.card {
+  width: 303px;
+  height: 230px;
+  border: 3px solid var(--primary);
+  border-radius: 31px;
+  background-color: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12px;
+  cursor: pointer;
+  transition: all 0.03s ease-in-out;
+}
+
+.deselected {
+  border: none;
+  background-color: #1a1a1a;
+}
+
+.deselected .thumbnail {
+  filter: brightness(55%);
+}
+
+.deselected .title {
+  color: var(--disable);
+}
+
+.thumbnail {
+  width: 277px;
+  height: 175px;
+  border-radius: 21px;
+  object-fit: cover;
+  transition: filter 0.03s ease-in-out;
+  user-select: none;
+}
+
+.title {
+  width: 265px;
+  margin-top: 10px;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.03s ease-in-out;
+}
+
+/* 투표 중, 후 */
+
+.resultTitle {
+  font-size: 40px;
+  font-weight: 700;
+  padding-bottom: 25px;
+}
+
+.resultBody {
+  display: flex;
+  gap: 30px;
+  height: calc(100vh - 470px);
+}
+
+.loadingBox {
+  height: 100%;
+  flex-grow: 7;
+  border-style: solid;
+  border-width: 2px;
+  border-top-color: white;
+  border-bottom-color: white;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  background-color: #4d4d4d;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.publicBtns {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: flex-start;
+  gap: 10px;
+  justify-content: end;
+}
+
+.publicBtn {
+  height: 80px;
+  border: solid 2px white;
+  border-radius: 51px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.publicBtn:hover,
+.publicBtn:active {
+  border: 2px solid var(--primary);
+  background-color: var(--primary);
+}
+
+.publicBtnDisable {
+  height: 80px;
+  border: solid 2px #767676;
+  border-radius: 51px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: #797979;
+  background: #404040;
+}
+
+/* 테이블 */
+.resultBody {
+  display: flex;
+  gap: 30px;
+  height: calc(100vh - 470px);
+}
+
+.tableWrapper {
+  flex-grow: 7;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #313131;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+th {
+  border: 2px solid var(--tableLine);
+  background-color: var(--primary);
+  color: black;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 13px;
+}
+
+td {
+  border: 2px solid var(--tableLine);
+  font-size: 15px;
+  padding: 10px 5px 10px 10px;
+}
+
+th:first-child,
+td:first-child {
+  border-left: none;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+
+table th:nth-child(1) {
+  background-color: #abd4fd;
+  color: #000;
+  font-weight: 700;
+}
+
+table td:nth-child(1) {
+  background-color: #4d4d4d;
+  font-weight: 700;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+  .upperBox {
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬 */
+    gap: 10px;
+  }
+
+  .upperRight {
+    white-space: normal; /* 줄바꿈 허용 */
+    font-size: 16px; /* 모바일에 맞게 줄여도 됨 */
+  }
+
+  .voteSemester {
+    font-size: 35px; /* 모바일에서 너무 크면 조절 */
+  }
+
+  .openBtn {
+    font-size: 25px;
+    padding: 5px 20px;
+  }
+
+  .closeBtn {
+    font-size: 25px;
+    padding: 5px 20px;
+  }
+}

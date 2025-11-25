@@ -1,0 +1,225 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --primary: #abd4fd;
+  --tableLine: rgba(255, 255, 255, 0.5);
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 29px;
+}
+
+.Box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 42px;
+  background: #313131;
+  padding: 37px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* 테이블 관련 */
+table {
+  min-width: 386px;
+  width: 100%;
+  border-collapse: collapse;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid var(--tableLine);
+  border-bottom: 1px solid var(--tableLine);
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+th {
+  border: 2px solid var(--tableLine);
+  background-color: var(--primary);
+  color: black;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 13px;
+}
+
+td {
+  border: 2px solid var(--tableLine);
+  font-size: 15px;
+  padding: 10px 5px 10px 10px;
+}
+
+th:first-child,
+td:first-child {
+  border-left: none;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+
+/* 선택된 행 스타일 */
+.selectedRow {
+  background-color: #505050;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.selectedRow td {
+  background-color: #505050;
+}
+
+/* 유저 목록 박스 */
+
+.filterSelect {
+  width: 140px;
+  height: 32px;
+  border: 1px solid #626262;
+  border-radius: 68px;
+  background-color: #bcbcbc;
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 10px;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+}
+
+.filterSelect option {
+  background-color: #bcbcbc;
+  border: none;
+}
+
+.userContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  min-height: 0;
+}
+
+.userList {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 13px;
+  flex: 1;
+  min-height: 0;
+}
+
+.selectedBox {
+  background-color: var(--primary);
+}
+
+/* 스크롤바 스타일*/
+.userList::-webkit-scrollbar {
+  width: 6px;
+  height: 71px;
+}
+
+.userList::-webkit-scrollbar-thumb {
+  background: #969696;
+  border-radius: 123px;
+}
+
+.userList::-webkit-scrollbar-thumb:hover {
+  background: #969799;
+}
+
+/* 권한 변경 박스 */
+.changeContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+}
+
+.controler {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 45px;
+  margin-bottom: 20px;
+}
+
+.roleDropdown {
+  min-width: 200px;
+  height: 45px;
+  font-size: 18px;
+  border-radius: 26px;
+  cursor: pointer;
+  background-color: #bcbcbc;
+  color: black;
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+  font-weight: 700;
+  outline: none;
+}
+
+.changeList {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.adjust {
+  width: 100px;
+  height: 45px;
+  border-radius: 69px;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: 1px solid white;
+  background-color: transparent;
+  font-size: 18px;
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.adjust:hover,
+.adjust:active {
+  color: white;
+  border: 1px solid var(--primary);
+  background-color: var(--primary);
+}
+
+/* 하단 페이지 네이션 */
+.pageNation {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.prevPage:hover,
+.nextPage:hover {
+  font-size: 22px;
+  cursor: pointer;
+}

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
-import "../assets/Filter/Type.css";
 import "../App.css";
-import "../assets/Filter/Contentbox.css";
+import "../assets/Contentbox.css";
 import LoadingImage from "../assets/img/WAP_white_NoBG.png";
 
 /* 알약 버튼 목록 (UI 전용) */
@@ -181,25 +179,26 @@ const ContentBox = () => {
             {/* 연도 + 학기 필터 드롭다운 */}
             <div className="filter-dropdown">
               <button onClick={toggleYearAccordion} className="dropdown-button">
-                {yearAccordionOpen ? "년도/학기 ▲" : "년도/학기 ▼"}
+                {yearAccordionOpen ? "년도/학기 ▲" 
+                : `${('0' + (semesterFilter.year - 2000)).slice(-2)}년 ${semesterFilter.semester}학기 ▼`}
               </button>
               {yearAccordionOpen && (
                 <div className="dropdown-content">
-                  {/* 2000년부터 현재년도까지 역순 표시 */}
-                  {Array.from({ length: currentYear - 2000 + 1 }, (_, i) => currentYear - i).map(
+                  {/* 2025년부터 현재년도까지 역순 표시 */}
+                  {Array.from({ length: currentYear - 2025 + 1 }, (_, i) => currentYear - i).map(
                     (year) => {
                       const twoDigitYear = ('0' + (year - 2000)).slice(-2); //연도가 두자릿수로 표시되도록
                       return (
-                      <div key={year}>
-                        <button onClick={() => handleSemesterChange(year, 2)}>
-                          {twoDigitYear}-2
-                        </button>
-                        <button onClick={() => handleSemesterChange(year, 1)}>
-                          {twoDigitYear}-1
-                        </button>
-                      </div>
-                    )
-                  }
+                        <div key={year}>
+                          <button onClick={() => handleSemesterChange(year, 2)}>
+                            {twoDigitYear}-2
+                          </button>
+                          <button onClick={() => handleSemesterChange(year, 1)}>
+                            {twoDigitYear}-1
+                          </button>
+                        </div>
+                      )
+                    }
                   )}
                 </div>
               )}

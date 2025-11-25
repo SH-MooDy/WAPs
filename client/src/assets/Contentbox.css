@@ -1,0 +1,472 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ========== 공통(전역) ========== */
+/* 상단 필터 영역 */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  flex-wrap: nowrap;
+  font-family: 'Pretendard-Regular';
+}
+
+/* 알약 버튼 그룹 */
+.pill-filter {
+  margin-left: 20px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: nowrap; 
+}
+
+/* 알약 버튼 기본(전역 기본값) */
+.pill {
+  font-size: 10px;
+  border: 1px solid #d8d8d8;
+  background: #f3f3f300;
+  border-radius: 999px;
+  padding: 8px 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  flex-wrap: nowrap; 
+  flex: 0 0 auto; 
+}
+.pill:hover {
+  color: #000000;
+  background: #ABD4FD;
+  border-color: #ABD4FD;
+}
+.pill.active {
+  background: #ABD4FD;
+  border-color: #ABD4FD;
+  color: #00000000;
+}
+
+/* 학기 드롭다운 버튼(전역 기본값) */
+.dropdown-button {
+  font-size: 80%;
+  background: #f3f3f300;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+/* hover/포커스 시 하얀 테두리 + 옅은 흰 배경만 */
+.hero .dropdown-button:hover,
+.hero .dropdown-button:focus {
+  background: rgba(255, 255, 255, 0);
+}
+
+/* 드롭다운 메뉴(전역 기본값) */
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(229, 229, 229, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 50;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: center;
+  min-width: 80px;
+  backdrop-filter: blur(10px);
+}
+
+/* 스크롤바 스타일링 */
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+.dropdown-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-content > div {
+  border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.dropdown-content > div:last-child {
+  border-bottom: none;
+}
+
+.dropdown-content button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+  transition: background-color 0.2s, color 0.2s;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+.dropdown-content button:hover {
+  background: rgba(171, 212, 253, 0.3);
+  color: #0f172a;
+}
+
+/* 프로젝트 박스 디자인 */
+.content-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  font-family: 'Pretendard-Regular';
+  padding: 0 20px;
+}
+.content-box .box {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  margin: 10px 0;
+  background-color: transparent;
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+}
+.content-box .box .image {
+  width: 170px;
+  height: 100px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: #4a4a4a;
+  border-radius: 12px;
+  position: relative;
+  margin-top: 0;
+  align-self: flex-start;
+}
+.content-box .box .project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: relative;
+}
+
+/* ====== 타이틀/태그/본문 레이아웃 (병합 적용) ====== */
+.content-box .box .titlebox {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 1px;
+  background: transparent;
+  color: #ffffff;
+  position: relative;
+}
+/* 제목+태그를 한 줄로 묶는 래퍼 */
+.content-box .box .titlebox .title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+/* 제목 */
+.content-box .box .titlebox h2 {
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  flex-basis: 100%;
+  text-align: left !important;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 본문: 제목/태그 아래 줄 */
+.content-box .box .titlebox p {
+  margin: 2px 0 0 0;
+  font-size: 10px;
+  color: #b0b0b0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 태그 공통 스타일(색상은 아래 유형별로) */
+.content-box .box .project-type-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 5px;
+  border-radius: 20px;
+  font-size: 7px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* ========== Hero ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: flex-end;
+  padding: 32px 20px 28px;
+  box-sizing: border-box;
+  isolation: isolate;
+  background: linear-gradient(90deg, #a0aeffe8 0%, #b4edfed2 100%);
+  overflow: visible;
+  z-index: 1;
+}
+/* 아래→위 명암 오버레이 */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1.0) 0%,
+    rgba(30, 30, 30, 0.6) 40%,
+    rgba(102, 102, 102, 0.0) 100%
+  );
+  z-index: -1;
+}
+.hero__inner {
+  width: 100%;
+  max-width: 1040px;
+  margin-left: 3px;
+  margin: 0 auto;
+  color: #fff;
+}
+.hero__badge { 
+  font-weight: 800; 
+  letter-spacing: 0.5px; 
+  opacity: .95; 
+  margin-bottom: 8px; 
+  font-size: 18px; 
+}
+.hero__title { 
+  margin: 0; 
+  margin-left: 5px;
+  font-size: 19px; 
+  line-height: 1.2; 
+  font-weight: 600; 
+  text-align: left; 
+}
+.hero__subtitle { 
+  margin-top: 6px; 
+  margin-left: 5px; 
+  font-size: 20px; 
+  font-weight: 600; 
+  color: rgba(255,255,255,.632); 
+}
+
+/* Hero 내부 필터바 — 배경/그림자 제거(검은 박스 제거) */
+.hero__controls,
+.hero .filter-container {
+  margin-top: 20px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+
+/* 필터 바가 가로폭을 꽉 쓰게 */
+.hero .filter-container {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  padding-right: 0 !important;
+  gap: 12px !important;
+}
+
+/* 왼쪽 알약 그룹의 불필요한 좌측 마진 제거 */
+.hero .pill-filter {
+  margin-left: 0 !important;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* 드롭다운 래퍼를 오른쪽 끝으로 밀기 + 기준점 설정 */
+.hero .filter-container > .filter-dropdown {
+  margin-left: auto !important;
+  position: relative !important;
+  flex: 0 0 auto;
+}
+
+/* Hero 내부 드롭다운 메뉴 */
+.hero .filter-container > .filter-dropdown .dropdown-content {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+/* Hero 스코프 덮어쓰기 */
+.hero .pill-filter { 
+  margin-left: 0; 
+  gap: 4px; 
+}
+
+/* 알약: 투명 배경 + 흰 테두리, 선택 시만 채움 */
+.hero .pill {
+  font-size: 11px;
+  color: rgba(255,255,255,0.95);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.72);
+  border-radius: 999px;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.hero .pill:hover {
+  background: #ABD4FD;
+  border-color: rgba(255, 255, 255, 0);
+  color: #0f172a;
+}
+.hero .pill.active {
+  background: #ABD4FD;
+  border-color: #ABD4FD;
+  color: #0f172a;
+}
+
+/* ========== 검색창 (Hero) ========== */
+.hero__search {
+  margin-top: 28px;
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+  align-self: flex-start;   
+}
+.hero__search .search-bar {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.653);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0);
+  display: flex;
+  align-items: center;
+  padding-left: 46px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  overflow: hidden;  
+}
+.hero__search .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero__search .search-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.8;
+  filter: grayscale(20%);
+}
+.hero__search .search-input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #1f2937;
+  font-size: 11px;
+}
+.hero__search .search-input::placeholder {
+  color: rgba(31,41,55,0.72);
+}
+
+@media (max-width: 480px) {
+  .hero__search { max-width: 100%; }
+  .hero__search .search-bar { height: 42px; }
+  .hero__search .search-icon { width: 20px; height: 20px; }
+}
+
+/* ========================= 유형태그 색상 ========================= */
+.content-box .box .project-type-tag.tag--web {
+  background-color: #9B95CC;
+  color: #0f172a;
+}
+.content-box .box .project-type-tag.tag--app {
+  background-color: #8AA788;
+  color: #0b3a2a;
+}
+.content-box .box .project-type-tag.tag--game {
+  background-color: #D1AA6B;
+  color: #111827;
+}
+.content-box .box .project-type-tag.tag--etc {
+  background-color: #68A6C7;
+  color: #1f2937;
+}
+
+/* ========== Type.css에서 추가된 스타일 ========== */
+.filter-dropdown {
+  position: relative;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+button {
+  text-align: left;
+}

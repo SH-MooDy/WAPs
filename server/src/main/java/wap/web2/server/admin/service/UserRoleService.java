@@ -4,10 +4,10 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wap.web2.server.admin.dto.RoleChangeRequest;
-import wap.web2.server.admin.dto.RoleChangeResponse;
-import wap.web2.server.admin.dto.UserRolePageResponse;
-import wap.web2.server.admin.dto.UserRoleResponse;
+import wap.web2.server.admin.dto.request.RoleChangeRequest;
+import wap.web2.server.admin.dto.response.RoleChangeResponse;
+import wap.web2.server.admin.dto.response.UserRolePageResponse;
+import wap.web2.server.admin.dto.response.UserRoleResponse;
 import wap.web2.server.member.entity.Role;
 import wap.web2.server.member.entity.User;
 import wap.web2.server.member.repository.UserRepository;
@@ -32,13 +32,15 @@ public class UserRoleService {
     }
 
     @Transactional(readOnly = true)
-    public UserRolePageResponse getUsersForAdmin(int size, int page) {
+    public UserRolePageResponse getUsersForAdmin(int size, int page, Role role) {
         int fetchSize = size + 1; // 다음 페이지 유무를 확인하기 위해 size보다 크게 가져옴
         int offset = page * size;
-        List<User> users = userRepository.findUserByOffset(fetchSize, offset);
+
+        List<User> users = userRepository.findUserByOffset(fetchSize, offset, role);
 
         boolean hasNext = false;
         List<UserRoleResponse> content = users.stream().map(UserRoleResponse::from).toList();
+
         if (users.size() > size) {
             hasNext = true;
             content = content.subList(0, size);
@@ -46,4 +48,5 @@ public class UserRoleService {
 
         return new UserRolePageResponse(content, hasNext);
     }
+
 }

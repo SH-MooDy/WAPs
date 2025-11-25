@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "../../assets/Vote/ProjectVote.module.css";
+import styles from "../../assets/ProjectVote.module.css";
 
 const VoteProjectList = ({
   // handleProjectSelect,
@@ -24,11 +24,11 @@ const VoteProjectList = ({
       // 이미 선택된 프로젝트는 해제
       setSelectedProjects(selectedProjects.filter((id) => id !== projectId));
     } else {
-      // 선택된 프로젝트가 3개 미만일 때만 추가
+      // 선택된 프로젝트가 3개일 때만 추가
       if (selectedProjects.length < 3) {
         setSelectedProjects([...selectedProjects, projectId]);
       } else {
-        alert("최대 3개의 프로젝트만 선택할 수 있습니다."); // 사용자에게 알림
+        alert("3개의 프로젝트만 선택할 수 있습니다."); // 사용자에게 알림
       }
     }
   };
@@ -49,7 +49,7 @@ const VoteProjectList = ({
           // );
         }
       } catch (error) {
-        // console.error("데이터 가져오는 중 오류 발생:", error);
+        console.error("데이터 가져오는 중 오류 발생:", error);
       }
     };
 
@@ -65,15 +65,14 @@ const VoteProjectList = ({
           return (
             <div
               key={project.projectId}
-              className={`${styles.project_list_box} ${
-                isSelected ? styles.selected : ""
-              }`}
+              className={`${styles.project_list_box} ${isSelected ? styles.selected : ""
+                }`}
               onClick={() =>
                 handleProjectSelect(project.projectId, isVotedUser)
               }
             >
               <div className={styles.inform_box}>
-                <div style={{ marginTop: 10, fontSize: 18 }}>{index + 1}</div>
+                <div style={{ fontSize: 15, position: "absolute", zIndex: 2}}>{index + 1}</div>
                 {project.thumbnail && (
                   <div className={styles.project_thumbnail}>
                     <img
@@ -86,9 +85,8 @@ const VoteProjectList = ({
 
                 <div className={styles.project_title_form}>
                   <h2
-                    className={`${styles.title} ${
-                      isSelected ? styles.selected_title : ""
-                    }`}
+                    className={`${styles.title} ${isSelected ? styles.selected_title : ""
+                      }`}
                   >
                     {project.title}
                   </h2>

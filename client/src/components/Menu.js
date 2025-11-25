@@ -1,14 +1,37 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FaChevronRight } from "react-icons/fa";
-import "../assets/Menu/Menu.css";
+import "../assets/Menu.css";
 
 const Menu = ({ menuOpen, toggleMenu, userName }) => {
   const navigate = useNavigate();
 
   const [canNavigate, setCanNavigate] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("authToken"));
+  const [userRole, setUserRole] = useState(Cookies.get("userRole") || null);
+
+  // ✅ 메뉴 열릴 때 배경 스크롤만 막고, 화면 밀림(shift) 방지
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    // 스크롤바 사라지면서 화면이 밀리는 현상 방지
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
+  }, [menuOpen]);
 
   const handleNavigationWithAuth = (path) => {
     const token = Cookies.get("authToken");
@@ -21,9 +44,27 @@ const Menu = ({ menuOpen, toggleMenu, userName }) => {
     }
   };
 
+  const handleAdminNavigate = () => {
+    const token = Cookies.get("authToken");
+    const role = Cookies.get("userRole");
+
+    if (!token) {
+      alert("해당 페이지는 로그인을 해야 접속 가능합니다.");
+      navigate("/login");
+    } else if (role !== "ROLE_ADMIN") {
+      alert("관리자 권한이 없습니다.");
+    } else {
+      Cookies.set("previousPage", window.location.pathname, { expires: 1 });
+      navigate("/admin/vote");
+      toggleMenu();
+    }
+  };
+
   useEffect(() => {
     const token = Cookies.get("authToken");
+    const role = Cookies.get("userRole");
     setIsLoggedIn(!!token);
+    setUserRole(role);
 
     const allowedDate = new Date("2024-11-29T18:00:00");
     const now = new Date();
@@ -32,24 +73,21 @@ const Menu = ({ menuOpen, toggleMenu, userName }) => {
       setCanNavigate(true);
     } else {
       const timeUntilAllowed = allowedDate - now;
-      setTimeout(() => {
-        setCanNavigate(true);
-      }, timeUntilAllowed);
+      setTimeout(() => setCanNavigate(true), timeUntilAllowed);
     }
   }, []);
 
   const handleVotePageNavigate = () => {
-    if (canNavigate) {
-      handleNavigationWithAuth("/vote");
-    } else {
-      alert("투표는 로그인 이후에 가능합니다.");
-    }
+    if (canNavigate) handleNavigationWithAuth("/vote");
+    else alert("투표는 로그인 이후에 가능합니다.");
   };
 
   const handleLogout = () => {
     Cookies.remove("authToken");
     Cookies.remove("userName");
+    Cookies.remove("userRole");
     setIsLoggedIn(false);
+    setUserRole(null);
     alert("로그아웃 되었습니다.");
     toggleMenu();
     navigate("/");
@@ -65,23 +103,24 @@ const Menu = ({ menuOpen, toggleMenu, userName }) => {
             ) : (
               <p className="welcome-message">로그인을 해주십시오.</p>
             )}
-            
+
             <h2 className="menu-title">MENU PAGE</h2>
 
             <div className="menu-section">
               <h3 className="section-title">PROJECTS</h3>
               <div className="menu-items">
-                <button 
+                <button
                   className="menu-item"
                   onClick={() => {
-                    navigate("/HomePage");
+                    navigate("/ProjectPage");
                     toggleMenu();
                   }}
                 >
                   <span>프로젝트 Projects</span>
                   <span className="arrow"><FaChevronRight /></span>
                 </button>
-                <button 
+
+                <button
                   className="menu-item"
                   onClick={() => handleNavigationWithAuth("/project/create")}
                 >
@@ -92,16 +131,33 @@ const Menu = ({ menuOpen, toggleMenu, userName }) => {
             </div>
 
             <div className="menu-section">
+              <h3 className="section-title">CALENDAR</h3>
+              <div className="menu-items">
+                <button
+                  className="menu-item"
+                  onClick={() => {
+                    navigate("/calendar");
+                    toggleMenu();
+                  }}
+                >
+                  <span>캘린더 CALENDAR</span>
+                  <span className="arrow"><FaChevronRight /></span>
+                </button>
+              </div>
+            </div>
+
+            <div className="menu-section">
               <h3 className="section-title">TEAMBUILDING</h3>
               <div className="menu-items">
-                <button 
+                <button
                   className="menu-item"
                   onClick={() => handleNavigationWithAuth("/team-build")}
                 >
                   <span>팀빌딩 Team Building</span>
                   <span className="arrow"><FaChevronRight /></span>
                 </button>
-                <button 
+
+                <button
                   className="menu-item"
                   onClick={() => navigate("/team-build/result")}
                 >
@@ -111,25 +167,49 @@ const Menu = ({ menuOpen, toggleMenu, userName }) => {
               </div>
             </div>
 
+            {userRole === "ROLE_ADMIN" && (
+              <div className="menu-section">
+                <h3 className="section-title">ADMINISTRATOR</h3>
+                <div className="menu-items">
+                  <button
+                    className="menu-item"
+                    onClick={handleAdminNavigate}
+                  >
+                    <span>임원진 페이지 Administrator Page</span>
+                    <span className="arrow"><FaChevronRight /></span>
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="menu-section">
               <h3 className="section-title">VOTE</h3>
               <div className="menu-items">
-                <button 
+                <button
                   className="menu-item"
                   onClick={handleVotePageNavigate}
                 >
                   <span>투표 Vote</span>
                   <span className="arrow"><FaChevronRight /></span>
                 </button>
+                <button
+                  className="menu-item"
+                  onClick={() => {
+                    navigate("/vote/result");
+                    toggleMenu();
+                  }}
+                >
+                  <span>투표 결과 Vote Result</span>
+                  <span className="arrow"><FaChevronRight /></span>
+                </button>
               </div>
             </div>
 
-            <button 
+            <button
               className="logout-button"
               onClick={() => {
-                if (isLoggedIn) {
-                  handleLogout();
-                } else {
+                if (isLoggedIn) handleLogout();
+                else {
                   toggleMenu();
                   navigate("/login");
                 }

@@ -1,0 +1,168 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+.container {
+  padding: 30px 45px;
+  gap: 29px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  gap: 38px;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.sidebarWrapper {
+  display: block;
+}
+
+.contentsBox {
+  flex: 1;
+  height: 100%;
+  padding: 43px;
+  border-radius: 56px;
+  background-color: #202020;
+  box-sizing: border-box;
+}
+
+/* 헤더 */
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #adadad;
+  border-radius: 3px;
+}
+
+.logo {
+  color: #adadad;
+  font-size: 32px;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+}
+
+.headerRight {
+  display: flex;
+  gap: 25px;
+}
+
+.adminUser {
+  font-size: 27px;
+  font-weight: 700;
+  text-align: center;
+  color: #c5c5c5;
+}
+
+.exitBtn {
+  font-size: 30px;
+  color: #adadad;
+  font-weight: 600;
+  align-self: flex-start;
+  margin-top: 3px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mobileSidebarOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.mobileSidebarContent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 350px; /* 모바일 사이드바 너비 */
+  height: 100%;
+  background-color: #1a1a1a; /* 배경색 지정 */
+  padding: 30px;
+  box-sizing: border-box;
+  z-index: 1000;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* --- 반응형 미디어 쿼리 (1024px 이하일 때 동작) --- */
+@media (max-width: 1024px) {
+  .container {
+    padding: 20px; /* 패딩 축소 */
+  }
+
+  /* 데스크탑 사이드바 숨김 */
+  .sidebarWrapper {
+    display: none;
+  }
+
+  /* 메뉴 버튼 표시 */
+  .hamburger {
+    display: flex;
+  }
+
+  /* 메인 갭 제거 */
+  .main {
+    gap: 0;
+  }
+
+  .contentsBox {
+    padding: 20px; /* 내부 패딩 축소 */
+    border-radius: 30px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+  .adminUser {
+    font-size: 18px;
+  }
+}
